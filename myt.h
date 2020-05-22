@@ -6,6 +6,7 @@
 
 class videoData                  // TODO: use struct ?
 {
+public:
     QString title;
     QString channel;
     QString views;
