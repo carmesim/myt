@@ -19,8 +19,6 @@ void MYTApp::getSearch(QString query)
     if (results.isEmpty())
         qDebug() << "Problem reading query JSON.\n";
 
-    QTextStream stream(stdout);
-    stream << "Lendo vídeos\n";
     foreach(QJsonValue element, results["results"].toArray())
     {
         QJsonObject node = element.toObject();

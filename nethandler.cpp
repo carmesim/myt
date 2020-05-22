@@ -2,11 +2,11 @@
 
 void NetHandler::saveResults(QNetworkReply *reply)
 {
-    QFile caFile("raw_results.json");
-    caFile.open(QIODevice::WriteOnly | QIODevice::Text);
-    QTextStream outStream(&caFile);
+    QFile rawResults("raw_results.json");
+    rawResults.open(QIODevice::WriteOnly | QIODevice::Text);
+    QTextStream outStream(&rawResults);
     outStream << reply->readAll();
-    caFile.close();
+    rawResults.close();
 }
 
 void NetHandler::getResponse(QUrl url)
