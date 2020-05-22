@@ -3,14 +3,15 @@
 #include <QObject>
 #include <QNetworkRequest>
 
-void NetHandler::replyFinished(QNetworkReply *reply)
+void NetHandler::saveResults(QNetworkReply *reply)
 {
     qDebug() << reply->readAll();
 }
 
-void NetHandler::checkSite(QUrl url)
+void NetHandler::getResponse(QUrl url)
 {
-    connect(manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(replyFinished(QNetworkReply*)));
+    manager = new QNetworkAccessManager(this);
+    connect(manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(saveResults(QNetworkReply*)));
     manager->get(QNetworkRequest(url));
 }
 
@@ -18,5 +19,5 @@ void MYTApp::getSearch(QString query)
 {
     QUrl url = QUrl("http://youtube-scrape.herokuapp.com/api/search?q=" + query + "&page=1");
 
-    handler.checkSite(url);
+    handler.getResponse(url);
 }

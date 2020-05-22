@@ -22,9 +22,9 @@ class NetHandler : public QObject
     Q_OBJECT
     QNetworkAccessManager * manager;
 private slots:
-    void replyFinished(QNetworkReply *);
+    void saveResults(QNetworkReply *);
 public:
-    void checkSite(QUrl url);
+    void getResponse(QUrl url);
 };
 
 class MYTApp
