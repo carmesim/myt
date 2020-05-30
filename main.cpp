@@ -9,8 +9,5 @@ int main(int argc, char *argv[])
     MainWindow w;
     w.show();
 
-    MYTApp myt;
-    myt.getSearch("Digital Foundry");
-
     return app.exec();
 }

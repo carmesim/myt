@@ -1,45 +1,45 @@
 #include "myt.h"
 #include "mainwindow.h"
+#include <QDebug>
 #include <QJsonObject>
 #include <QJsonDocument>
 #include <QJsonArray>
-#include <QDebug>
+#include <QNetworkReply>
 
-void MYTApp::getSearch(QString query)
+MYTApp::MYTApp()
 {
-    QUrl url = QUrl("http://youtube-scrape.herokuapp.com/api/search?q=" + query + "&page=1");
+    connect(&manager, &QNetworkAccessManager::finished, this, &MYTApp::responseReceived);
+}
 
-    handler.getResponse(url);   // Will save the results of the given query on raw_results
+void MYTApp::getSearch(QString query, int page)
+{
+    QUrl url = QUrl("http://youtube-scrape.herokuapp.com/api/search?q=" + query + "&page=" + QString::number(page));
 
-    QFile rawResults("raw_results.json");
-    rawResults.open(QIODevice::ReadOnly | QIODevice::Text);
-    QByteArray    inputData = rawResults.readAll();
-    QJsonObject   results   = QJsonDocument::fromJson(inputData).object();
+    manager.get(QNetworkRequest(url));
+}
 
-    if (results.isEmpty())
-        qDebug() << "Problem reading query JSON.\n";
+void MYTApp::responseReceived(QNetworkReply *reply)
+{
+    searchResults.clear();
+    QJsonObject results = QJsonDocument::fromJson(reply->readAll()).object();
 
-    foreach(QJsonValue element, results["results"].toArray())
+    for(QJsonValue element : results["results"].toArray())
     {
         QJsonObject node = element.toObject();
+        QJsonValue video = node["video"];
+        QJsonValue uploader = node["uploader"];
 
         videoData vid;
-        vid.title        = static_cast<QJsonValue>(node["video"])["title"].toString();
-        vid.views        = static_cast<QJsonValue>(node["video"])["views"].toString();
-        vid.channel      = static_cast<QJsonValue>(node["uploader"])["username"].toString();
-        vid.videoUrl     = static_cast<QJsonValue>(node["video"])["url"].toString();
-        vid.thumbnailUrl = static_cast<QJsonValue>(node["video"])["thumbnail_src"].toString();
-        vid.uploadDate   = static_cast<QJsonValue>(node["video"])["upload_date"].toString();
 
-//        stream << vid.title << '\n';
-//        stream << vid.views << '\n';
-//        stream << vid.channel << '\n';
-//        stream << vid.videoUrl << '\n';
-//        stream << vid.thumbnailUrl << '\n';
-//        stream << vid.uploadDate << '\n';
+        vid.title = video["title"].toString();
+        vid.views = video["views"].toString();
+        vid.channel = uploader["username"].toString();
+        vid.videoUrl = video["url"].toString();
+        vid.thumbnailUrl = video["thumbnail_src"].toString();
+        vid.uploadDate = video["upload_date"].toString();
+
         searchResults.append(vid);
-
     }
 
-    rawResults.close();
+    emit searchFinished(searchResults);
 }

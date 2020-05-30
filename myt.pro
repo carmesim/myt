@@ -18,13 +18,11 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     main.cpp \
     mainwindow.cpp \
-    myt.cpp \
-    nethandler.cpp
+    myt.cpp
 
 HEADERS += \
     mainwindow.h \
-    myt.h \
-    nethandler.h
+    myt.h
 
 FORMS += \
     mainwindow.ui
