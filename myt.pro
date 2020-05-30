@@ -18,11 +18,13 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     main.cpp \
     mainwindow.cpp \
-    myt.cpp
+    myt.cpp \
+    thumbnailgrabber.cpp
 
 HEADERS += \
     mainwindow.h \
-    myt.h
+    myt.h \
+    thumbnailgrabber.h
 
 FORMS += \
     mainwindow.ui

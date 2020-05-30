@@ -31,12 +31,12 @@ void MYTApp::responseReceived(QNetworkReply *reply)
 
         videoData vid;
 
-        vid.title = video["title"].toString();
-        vid.views = video["views"].toString();
-        vid.channel = uploader["username"].toString();
-        vid.videoUrl = video["url"].toString();
-        vid.thumbnailUrl = video["thumbnail_src"].toString();
-        vid.uploadDate = video["upload_date"].toString();
+        vid.title.setText(video["title"].toString());
+        vid.views.setText(video["views"].toString());
+        vid.channel.setText(uploader["username"].toString());
+        vid.videoUrl.setText(video["url"].toString());
+        vid.thumbnail.setData(Qt::DecorationRole, thumbGrab.fetchThumbnail(video["thumbnail_src"].toString()).scaledToWidth(150, Qt::SmoothTransformation));
+        vid.uploadDate.setText(video["upload_date"].toString());
 
         searchResults.append(vid);
     }

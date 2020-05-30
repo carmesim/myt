@@ -18,6 +18,7 @@ public:
 
 private:
     MYTApp mytApp;
+    QList<videoData> videoList; ///< QList for video results.
     QString curSearch = ""; ///< QString that holds the last search, for advancing pages and restoring the search query after switching to the "Please wait" message.
     Ui::MainWindow *ui;
 
@@ -26,7 +27,7 @@ private slots:
      * \brief Slot for receiving MYTApp's search results.
      * \param videoList List of videos found for the search.
      */
-    void receiveSearch(QList<videoData> videoList);
+    void receiveSearch(QList<videoData> _videoList);
     void on_searchButton_clicked();
     void on_searchBar_returnPressed();
 };

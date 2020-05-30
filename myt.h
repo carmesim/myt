@@ -1,19 +1,22 @@
 #ifndef MYT_H
 #define MYT_H
 
-#include "QNetworkAccessManager"
+#include <QImage>
+#include <QNetworkAccessManager>
 #include <QObject>
 #include <QString>
+#include <QTableWidgetItem>
+#include "thumbnailgrabber.h"
 
 class videoData
 {
 public:
-    QString title;
-    QString channel;
-    QString views;
-    QString uploadDate;
-    QString videoUrl;
-    QString thumbnailUrl;
+    QTableWidgetItem thumbnail;
+    QTableWidgetItem channel;
+    QTableWidgetItem title;
+    QTableWidgetItem uploadDate;
+    QTableWidgetItem videoUrl;
+    QTableWidgetItem views;
 };
 
 class MYTApp : public QObject
@@ -40,6 +43,11 @@ private:
      * \brief QNetworkManager object for making search requests.
      */
     QNetworkAccessManager manager;
+
+    /*!
+     * \brief ThumbnailGrabber object for retrieving video thumbnails.
+     */
+    ThumbnailGrabber thumbGrab;
 signals:
     /*!
      * \brief Signals that the search is finished and returns the list of found videos.
