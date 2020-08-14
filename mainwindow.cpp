@@ -56,3 +56,11 @@ void MainWindow::on_searchBar_returnPressed()
 {
     on_searchButton_clicked();
 }
+
+void MainWindow::on_videoList_cellDoubleClicked(int row, int column)
+{
+    column >>= 2;   //! Get rid of unused variable warning
+    QWidget::setWindowTitle ("myt - MPV is now playing \"" + videoList[row].title.text() + "\"");
+    mytApp.playVideo(videoList[row].videoUrl.text());
+    QWidget::setWindowTitle ("myt");
+}

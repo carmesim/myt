@@ -54,6 +54,11 @@ signals:
      * \param videoList List of found videos.
      */
     void searchFinished(QList<videoData> videoList);
+    /*!
+     * \brief  Starts a process to play a video on yt-dl/MPV.
+     * \param  A QString containing the URL of the video to be played.
+     */
+    void playVideo(QString);
 };
 
 #endif // MYT_H

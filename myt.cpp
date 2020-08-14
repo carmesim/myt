@@ -5,6 +5,7 @@
 #include <QJsonDocument>
 #include <QJsonArray>
 #include <QNetworkReply>
+#include <QProcess>
 
 MYTApp::MYTApp()
 {
@@ -42,4 +43,22 @@ void MYTApp::responseReceived(QNetworkReply *reply)
     }
 
     emit searchFinished(searchResults);
+}
+
+//! TODO: decide if we should wait for the child process or not.
+void MYTApp::playVideo(QString url)
+{
+    std::string command = "mpv " + url.toStdString();
+    std::unique_ptr<FILE, decltype(&pclose)> pipe(popen(command.c_str(), "r"), pclose);
+    if (!pipe)
+    {
+        qDebug() << "In MYTApp::playVideo: failed to run MPV process.";
+    }
+
+    // QProcess::execute(command);
+//    QProcess *proc = new QProcess();
+//    proc->start(command);
+//    delete proc;
+
+
 }

@@ -30,5 +30,6 @@ private slots:
     void receiveSearch(QList<videoData> _videoList);
     void on_searchButton_clicked();
     void on_searchBar_returnPressed();
+    void on_videoList_cellDoubleClicked(int row, int column);
 };
 #endif // MAINWINDOW_H
